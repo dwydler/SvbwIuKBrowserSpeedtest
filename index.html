@@ -1,0 +1,143 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, user-scalable=no">
+
+		<title>Speedtest der Stadt Bad Wurzach</title>
+		<link rel="shortcut icon" href="img/favicon.ico">
+
+		<!--<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Encode+Sans+Condensed">-->
+		<link rel="stylesheet" href="css/stylesheet.css">
+		
+		<script language="JavaScript" src="js/unCryptMail.js" type="text/javascript"></script>
+		<script type="text/javascript" src="speedtest.js"></script>
+		
+		<script type="text/javascript">
+			//INITIALIZE SPEEDTEST
+			var s=new Speedtest(); //create speedtest object
+          
+			s.onupdate=function(data){ //callback to update data in UI
+				I("ip").textContent=data.clientIp;
+				I("dlText").textContent=(data.testState==1&&data.dlStatus==0)?"...":data.dlStatus;
+				I("ulText").textContent=(data.testState==3&&data.ulStatus==0)?"...":data.ulStatus;
+				I("pingText").textContent=data.pingStatus;
+				I("jitText").textContent=data.jitterStatus;
+				var prog=(Number(data.dlProgress)*2+Number(data.ulProgress)*2+Number(data.pingProgress))/5;
+				I("progress").style.width=(100*prog)+"%";
+			}
+
+			s.onend=function(aborted){ //callback for test ended/aborted
+				I("startStopBtn").className=""; //show start button again
+				if(aborted){ //if the test was aborted, clear the UI and prepare for new test
+				initUI();
+				}
+			}
+
+			function startStop(){ //start/stop button pressed
+				if(s.getState()==3){
+					//speedtest is running, abort
+					s.abort();
+				} else {
+					//test is not running, begin
+					s.start();
+					I("startStopBtn").className="running";
+				}
+			}	
+
+			//function to (re)initialize UI
+			function initUI(){
+				I("dlText").textContent="";
+				I("ulText").textContent="";
+				I("pingText").textContent="";
+				I("jitText").textContent="";
+				I("ip").textContent="";
+			}
+
+			function I(id){return document.getElementById(id);}
+		</script>
+	</head>
+
+	<body>
+	<div id="wrapper">
+	
+		<div id="header_left">
+			<img class="header" src="img/bad-wurzach_stadt_logo_L_rgb.svg">
+		</div>
+		
+		<div id="header_center">
+			<h1>Speedtest für den Browser</h1>
+		</div>
+		
+		<div id="header_right">
+			<img class="header" src="img/bad-wurzach_stadt_logo_L_rgb.svg">
+		</div>
+		
+		<div id="content">
+			<hr>
+			
+			<div id="startStopBtn" onclick="startStop()"></div>
+			<div id="test">
+				<div id="progressBar"><div id="progress"></div></div>
+				<div class="testGroup">
+					<div class="testArea">
+						<div class="testName">Download</div>
+						<div id="dlText" class="meterText"></div>
+						<div class="unit">Mbit/s</div>
+					</div>
+					<div class="testArea">
+						<div class="testName">Upload</div>
+						<div id="ulText" class="meterText"></div>
+						<div class="unit">Mbit/s</div>
+					</div>
+				</div>
+				<div class="testGroup">
+					<div class="testArea">
+						<div class="testName">Ping</div>
+						<div id="pingText" class="meterText"></div>
+						<div class="unit">Millisekunden</div>
+					</div>
+					<div class="testArea">
+						<div class="testName">Jitter</div>
+						<div id="jitText" class="meterText"></div>
+						<div class="unit">Millisekunden</div>
+					</div>
+				</div>
+				<div id="ipArea">
+					IP Addresse: <span id="ip"></span>
+				</div>
+			</div>
+			
+			<hr>
+		</div>
+		    
+		<div id="footer">
+          	<p>
+			Bei Problemen wenden Sie sich bitte per E-Mail an <a href="javascript:linkTo_UnCryptMailto('nbjmup;xfcnbtufsAcbe.xvs{bdi/ef');">Webmaster der Stadt Bad Wurzach</a>.
+			</p>
+	
+          	<p>
+              	<a href="https://github.com/librespeed/speedtest" target="_blank">Source Code</a> | 
+				<a href="https://www.bad-wurzach.de/datenschutz.html" target="_blank">Datenschutz</a> | 
+				<a href="https://www.bad-wurzach.de/impressum.html" target="_blank">Impressum</a> |
+				<a href="changelog.txt" target="_blank">Release 20220306-115200</a>
+			</p>
+			
+			<p>
+				<a href="http://validator.w3.org/check?uri=referer" target="_blank">
+				<img src="img/w3c-valid-html401.png" alt="Valid HTML 4.01 Transitional" height="31" width="88">
+				</a>
+				<a href="https://jigsaw.w3.org/css-validator/check/referer" target="_blank">
+				<img style="border:0;width:88px;height:31px" src="img/w3c-valid-vcss.gif" alt="CSS ist valide!">
+				</a>
+			</p>
+		</div>
+	</div>
+	
+    <script type="text/javascript">
+    initUI();
+	</script>
+      
+	</body>
+</html>

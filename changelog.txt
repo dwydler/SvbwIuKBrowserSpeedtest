@@ -1,0 +1,12 @@
+Changelog
+
+20220306-115200
+ - Changed Site Layout to CSS Grid
+ - Updated Speedtest Libraries to 5.2.5
+ - Self-Hosting of w3c Images
+ - Self-Hosting of Google Fonts
+ - Added Link to Source Code
+ - Added a Changelog
+ 
+20210313-100910
+ - Initial Release of the Site
